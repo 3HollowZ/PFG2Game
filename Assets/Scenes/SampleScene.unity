@@ -724,8 +724,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848285036}
   m_LocalRotation: {x: 0, y: 0, z: 0.2588191, w: 0.9659258}
-  m_LocalPosition: {x: 8.48, y: -12.04, z: -0.15289956}
-  m_LocalScale: {x: -10.353293, y: 1.2637926, z: 1}
+  m_LocalPosition: {x: 8.93, y: -11.78, z: -0.15289956}
+  m_LocalScale: {x: -11.267489, y: 1.2637926, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 537944531}
@@ -931,8 +931,9 @@ GameObject:
   - component: {fileID: 913416194}
   - component: {fileID: 913416193}
   - component: {fileID: 913416195}
+  - component: {fileID: 913416197}
   m_Layer: 6
-  m_Name: Floor
+  m_Name: Lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1031,6 +1032,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &913416197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913416192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17764bd357820544a851fd5bc00f51c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1064409659
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,7 +2039,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1980529311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.3, y: 12.71, z: 0}
+  m_LocalPosition: {x: -14.26, y: 12.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2315,8 +2328,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060786468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.043, y: -4.3199787, z: -0.15289956}
-  m_LocalScale: {x: 25.59282, y: 1.2636871, z: 1}
+  m_LocalPosition: {x: -7.1861, y: -4.3199787, z: -0.15289956}
+  m_LocalScale: {x: 25.30618, y: 1.2636871, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 537944531}

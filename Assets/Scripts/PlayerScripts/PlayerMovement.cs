@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()//Checks if player is grounded, ready to jump
     {
-        return Physics2D.OverlapBox(transform.position - new Vector3(0,0.5f), new Vector2(0.95f,1), 0f, groundLayer);
+        return Physics2D.OverlapBox(transform.position - new Vector3(0,0.5f), new Vector2(0.95f,0.95f), 0f, groundLayer);
         //Vector2 is X,Y
         //Vector3 is X,Y,Z
         //Uses 3 parameters
