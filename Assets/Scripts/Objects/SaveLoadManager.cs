@@ -7,6 +7,8 @@ public class SaveLoadManager : MonoBehaviour
 {
     private static string SAVE_PATH;
 
+    private static readonly byte ENCRYPTION_KEY = 0xAA;
+
     private void Awake()
     {
         SAVE_PATH = Application.persistentDataPath + "/save.json";
@@ -16,7 +18,8 @@ public class SaveLoadManager : MonoBehaviour
     {
         data.gameTime = gameTime;
         string json = JsonUtility.ToJson(data);
-        File.WriteAllText(SAVE_PATH, json);
+        byte[] encryptedData = Encrypt(json);
+        File.WriteAllBytes(SAVE_PATH, encryptedData);
     }
 
     public static GameData Load()
@@ -25,8 +28,9 @@ public class SaveLoadManager : MonoBehaviour
 
         if (File.Exists(SAVE_PATH))
         {
-            string json = File.ReadAllText(SAVE_PATH);
-            data = JsonUtility.FromJson<GameData>(json);
+            byte[] encryptedData = File.ReadAllBytes(SAVE_PATH);
+            string decryptedData = Decrypt(encryptedData);
+            data = JsonUtility.FromJson<GameData>(decryptedData);
         }
 
         return data;
@@ -38,5 +42,25 @@ public class SaveLoadManager : MonoBehaviour
         {
             File.Delete(SAVE_PATH);
         }
+    }
+
+    private static byte[] Encrypt(string text)
+    {
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(text);
+        for (int i = 0; i < data.Length; i++)
+        {
+            data[i] = (byte)(data[i] ^ ENCRYPTION_KEY);
+        }
+        return data;
+    }
+
+    private static string Decrypt(byte[] data)
+    {
+        for (int i = 0; i < data.Length; i++)
+        {
+            data[i] = (byte)(data[i] ^ ENCRYPTION_KEY);
+        }
+        string text = System.Text.Encoding.UTF8.GetString(data);
+        return text;
     }
 }
