@@ -2,42 +2,91 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; //Static instance of the GameManager so it can be accessed globally
+    public static GameManager instance;
 
-    private bool isGameOver; //Flag for if the game is over
+    private bool isGameOver;
+    public static float gameTime;
 
     public bool IsGameOver
     {
-        get { return isGameOver; } //Getter method for accessing isGameOver flag
-        set 
+        get { return isGameOver; }
+        set
         {
             isGameOver = value;
             if (isGameOver)
             {
-                StartCoroutine(LoadSceneAfterDelay(2.0f, "GameOverScene")); //Load the game over scene after a delay of 2 seconds
+                SaveGameData();
+                StartCoroutine(LoadSceneAfterDelay(2.0f, "GameOverScene"));
             }
         }
     }
 
-    private IEnumerator LoadSceneAfterDelay(float delay, string sceneName) //Coroutine to load a scene after a specified delay
+    private IEnumerator LoadSceneAfterDelay(float delay, string sceneName)
     {
-        yield return new WaitForSeconds(delay); //Wait for the specified delay
-        SceneManager.LoadScene(sceneName); //Load the specified scene
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneName);
     }
 
     private void Awake()
     {
-        if (instance == null) //If instance doesn't exist
+        if (instance == null)
         {
-            instance = this; //Set instance to this
+            instance = this;
         }
-        else if (instance != this) //If instance exists and it's not this
+        else if (instance != this)
         {
-            Destroy(gameObject); //Destroy this object
+            Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject); //Don't destroy this object when a new scene is loaded
+        DontDestroyOnLoad(gameObject);
+
+        LoadGameData();
+    }
+
+    private void Update()
+    {
+        if (!isGameOver)
+        {
+            gameTime += Time.deltaTime;
+        }
+    }
+
+    private void SaveGameData()
+    {
+        string filePath = Application.persistentDataPath + "/gameData.json";
+        GameData gameData = new GameData(gameTime);
+        string jsonData = JsonUtility.ToJson(gameData);
+        File.WriteAllText(filePath, jsonData);
+        Debug.Log("Game data saved to: " + filePath);
+    }
+
+    private void LoadGameData()
+    {
+        string filePath = Application.persistentDataPath + "/gameData.json";
+        if (File.Exists(filePath))
+        {
+            string jsonData = File.ReadAllText(filePath);
+            GameData gameData = JsonUtility.FromJson<GameData>(jsonData);
+            gameTime = gameData.gameTime;
+            Debug.Log("Game data loaded from: " + filePath);
+        }
+        else
+        {
+            gameTime = 0.0f;
+            Debug.Log("No game data found at: " + filePath);
+        }
+    }
+}
+
+public class GameData
+{
+    public float gameTime;
+
+    public GameData(float gameTime)
+    {
+        this.gameTime = gameTime;
     }
 }
