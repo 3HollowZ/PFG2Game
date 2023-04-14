@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     private bool isGameOver;
     public static float gameTime;
 
+    public EnemyPool enemyPool;
+    public Transform spawnPoint;
+
     public bool IsGameOver
     {
         get { return isGameOver; }
@@ -44,6 +47,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         LoadGameData();
+
+        Enemy enemy1 = enemyPool.Get();
+        enemy1.transform.position = spawnPoint.position;
+        enemy1.gameObject.SetActive(true);
+
+        Enemy enemy2 = enemyPool.Get();
+        enemy2.transform.position = spawnPoint.position + new Vector3(2f, 0f, 0f);
+        enemy2.gameObject.SetActive(true);
     }
 
     private void Update()
